@@ -1,0 +1,6 @@
+.open_form_button {
+  position: absolute;
+  top: 90%;
+  left: 100%;
+  transform: translateX(-150%);
+}

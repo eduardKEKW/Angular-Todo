@@ -1,0 +1,22 @@
+.full-width {
+  width: 100%;
+  display: block;
+  margin-top: 1rem;
+}
+
+.submit {
+  display: block;
+  margin: .5rem;
+}
+
+.bts {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+
+.email-err {
+  color: #f44336;
+  font-size: 75%;
+}

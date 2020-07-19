@@ -1,0 +1,60 @@
+<form [formGroup]="registerForm" (submit)="onSubmit()">
+    <mat-form-field class="full-width">
+      <mat-label>Email</mat-label>
+      <input matInput formControlName="email" placeholder="Ex. pat@example.com">
+      <mat-error *ngIf="hasError('email', 'email') && !hasError('email', 'required')">
+        Please enter a valid email address
+      </mat-error>
+      <mat-error *ngIf="hasError('email', 'required')">
+        Email is <strong>required</strong>
+      </mat-error>
+
+      <mat-error *ngIf="hasError('email', 'emailExists')">
+        Email is already taken
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="full-width">
+      <mat-label>Username</mat-label>
+      <input matInput formControlName="username" placeholder="name">
+      <mat-hint align="end">Not more then 60 characters long.</mat-hint>
+      <mat-error *ngIf="hasError('username', 'minlength') && !hasError('username', 'required')">
+        Username must be at least 5 characters long
+      </mat-error>
+      <mat-error *ngIf="hasError('username', 'required')">
+        Username is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <table class="full-width" cellspacing="10">
+      <tr>
+        <td>
+          <mat-form-field class="full-width">
+            <mat-label>Password</mat-label>
+            <input matInput type="password" formControlName="password">
+            <mat-error *ngIf="hasError('password', 'required')">
+              Password is <strong>required</strong>
+            </mat-error>
+            <mat-error *ngIf="hasError('password', 'minlength')">
+              Password must be at least 6 char long
+            </mat-error>
+          </mat-form-field>
+        </td>
+        <td>
+          <mat-form-field class="full-width">
+            <mat-label>Confirm</mat-label>
+            <input matInput type="password" formControlName="confirmPassword">
+            <mat-error *ngIf="hasError('confirmPassword', 'notSame') || hasError('confirmPassword', 'required')">
+              Password does not match
+            </mat-error>
+          </mat-form-field>
+        </td>
+      </tr>
+    </table>
+
+    <div class="bts">
+      <button class="submit" mat-button type="submit" [disabled]="!registerForm.valid">Register</button>
+      <button mat-raised-button color="warn" (click)="onCancel()">Cancel</button>
+    </div>
+  </form>
+

@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "angular-todo-af036": {
+      "hosting": {
+        "todo-app": [
+          "angular-todo-af036"
+        ]
+      }
+    }
+  }
+}
