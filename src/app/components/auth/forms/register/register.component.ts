@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators, AsyncValidatorFn, AbstractControl, 
 import { MatBottomSheetRef } from '@angular/material/bottom-sheet';
 import { BottomSheetComponent } from '../../bottom-sheet/bottom-sheet.component';
 import { UserService } from 'src/app/core/services/user.service';
+import { RxwebValidators } from '@rxweb/reactive-form-validators';
 
 @Component({
   selector: 'app-register',
@@ -13,7 +14,10 @@ export class RegisterComponent implements OnInit {
   registerForm: FormGroup;
   emailUnavaible = false;
 
-  constructor(private bottomSheetRef: MatBottomSheetRef<BottomSheetComponent>, private userService: UserService) { }
+  constructor(
+    private bottomSheetRef: MatBottomSheetRef<BottomSheetComponent>,
+    private userService: UserService
+  ) {}
 
   ngOnInit(): void {
     this.registerForm = new FormGroup({
@@ -21,7 +25,7 @@ export class RegisterComponent implements OnInit {
         Validators.required,
         Validators.email,
         Validators.maxLength(100),
-        this.emailValidator()
+        this.emailValidator(),
       ]),
       username: new FormControl('', [
         Validators.required,
@@ -36,6 +40,10 @@ export class RegisterComponent implements OnInit {
       confirmPassword: new FormControl('', [
         Validators.required,
         this.checkPassword,
+      ]),
+      avatar: new FormControl('', [
+        RxwebValidators.image({ maxHeight: 1000, maxWidth: 1000 }),
+        RxwebValidators.extension({ extensions: ['jpeg', 'gif', 'png'] })
       ]),
     });
   }
@@ -73,6 +81,9 @@ export class RegisterComponent implements OnInit {
   }
 
   hasError(controlName: string, errorName: string): boolean {
+    if (!this.registerForm.controls.avatar.errors) {
+      this.registerForm.controls.avatar.setErrors(null);
+    }
     this.emailUnavaible = false;
     return this.registerForm.controls[controlName].hasError(errorName);
   }

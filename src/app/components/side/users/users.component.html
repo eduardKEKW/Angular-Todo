@@ -1,0 +1,35 @@
+<div [ngClass]="{'side': true, 'side-open': sideOpen}" >
+  <div class="content">
+    <app-edit *ngIf="sideOpen"></app-edit>
+  </div>
+
+  <div class="bar" too>
+    <div class="expend-btn" (click)="toggleSide()" matTooltip="Edit" matTooltipPosition="right">
+      <mat-icon>view_sidebar</mat-icon>
+    </div>
+
+    <div class="account"  matTooltip="You" matTooltipPosition="right" (click)="onUserOpen(null)">
+      <mat-icon>account_circle</mat-icon>
+    </div>
+
+    <div class="users" *ngIf="user">
+      <div class="user" *ngFor="let user of user.admin | docs | async">
+        <div
+          class="user-avatar"
+          matTooltip="{{ user.username }}"
+          matTooltipPosition="right"
+          (click)="openEdit(user.id)"
+        >
+          <img [src]="user.avatar | img | async" alt="avatar" class="avatar">
+        </div>
+      </div>
+    </div>
+
+    <div  class="add-user"
+          matTooltip="Add user"
+          matTooltipPosition="right"
+          (click)="openDialog()" >
+      <mat-icon>add_circle</mat-icon>
+    </div>
+  </div>
+</div>

@@ -1,3 +1,3 @@
-<button class="open_form_button" mat-fab color="warn" aria-label="Open Forms" (click)="openBottomSheet()">
-  <mat-icon>filter_list</mat-icon>
+<button class="open_form_button" mat-fab color="warn" aria-label="Open Forms" (click)="onIconClick()" matTooltip="Login/Logout">
+  <mat-icon>{{ user ? 'logout' : 'filter_list' }}</mat-icon>
 </button>

@@ -26,7 +26,7 @@
       </mat-error>
     </mat-form-field>
 
-    <table class="full-width" cellspacing="10">
+    <table class="full-width" cellspacing="">
       <tr>
         <td>
           <mat-form-field class="full-width">
@@ -51,6 +51,19 @@
         </td>
       </tr>
     </table>
+
+    <div class="image-up">
+      <mat-label>Image</mat-label>
+      <input [writeFile]="true" type="file" formControlName="avatar" class="form-control-up"/>
+
+      <mat-hint align="end">Max 2MB.</mat-hint>
+      <mat-error *ngIf="hasError('avatar', 'extension')">
+        The file must be of type .jpeg or .gif
+      </mat-error>
+      <mat-error *ngIf="hasError('avatar', 'image')">
+        The file is too big
+      </mat-error>
+    </div>
 
     <div class="bts">
       <button class="submit" mat-button type="submit" [disabled]="!registerForm.valid">Register</button>

@@ -7,6 +7,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatInputModule } from '@angular/material/input';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 import { BottomSheetComponent } from './bottom-sheet/bottom-sheet.component';
 import { RegisterComponent } from './forms/register/register.component';
@@ -14,6 +15,9 @@ import { FormsComponent } from './forms/forms.component';
 
 import { UserService } from 'src/app/core/services/user.service';
 import { LoginComponent } from './forms/login/login.component';
+
+import {  RxReactiveFormsModule } from "@rxweb/reactive-form-validators"
+
 
 @NgModule({
   providers: [UserService],
@@ -26,6 +30,8 @@ import { LoginComponent } from './forms/login/login.component';
     MatIconModule,
     MatTabsModule,
     MatInputModule,
+    MatTooltipModule,
+    RxReactiveFormsModule,
   ],
   exports: [
     BottomSheetComponent,

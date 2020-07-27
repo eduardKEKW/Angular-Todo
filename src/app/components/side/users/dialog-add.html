@@ -1,0 +1,30 @@
+<h1 mat-dialog-title>{{data.name}}</h1>
+<div mat-dialog-content>
+  <p>Add user to your watch list.</p>
+  <mat-form-field>
+    <mat-label>User Id</mat-label>
+    <input matInput (change)="dataChanged($event)">
+  </mat-form-field>
+</div>
+
+<ng-container *ngIf="!loading; else noUser">
+  <div class="dialog_user" *ngIf="user">
+    <div class="dialog_avatar">
+      <img [src]="user.avatar | img | async" alt="avatar" class="avatar">
+    </div>
+    <div class="dialog_info">
+      <b>Name:</b> {{ user.username }}
+    </div>
+  </div>
+</ng-container>
+
+<ng-template #noUser>
+  <div class="no_user">
+    <mat-spinner diameter="30"></mat-spinner>
+  </div>
+</ng-template>
+
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Cancel</button>
+  <button mat-button [mat-dialog-close]="id" cdkFocusInitial [disabled]="disable">Add</button>
+</div>

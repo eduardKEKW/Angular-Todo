@@ -1,0 +1,132 @@
+.side {
+  transition: all .4s;
+  position: fixed;
+  transform: translateX(calc((100% + 50px) * -1));
+  height: 100vh;
+  width: 40vw;
+  background-color: white;
+  padding: 2rem;
+}
+
+.side-open {
+  transform: translateX(-50px);
+}
+
+.bar {
+  position: absolute;
+  background-color: #39393a;
+  height: 100%;
+  width: 50px;
+  top: 0px;
+  left: 100%;
+  box-shadow: 10px 10px 10px -10px rgba(0,0,0,0.72);
+}
+
+.content {
+  width: 100%;
+  height: 100%;
+}
+
+.expend-btn {
+  transition: all 1s;
+  width: 100%;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: solid 1px rgba(255, 255, 255, 0.294);
+  color: rgb(255, 255, 255);
+  cursor: pointer;
+}
+
+.expend-btn:hover {
+  color: #f44336;
+  border-bottom: solid 1px #f44336;
+}
+
+.side-open .expend-btn > .mat-icon {
+  transform: rotateY(180deg);
+}
+
+.account {
+  width: 100%;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: solid 1px rgba(255, 255, 255, 0.294);
+  color: rgb(255, 255, 255);
+  cursor: pointer;
+}
+
+.account:hover {
+  color: #f44336;
+  border-bottom: solid 1px #f44336;
+}
+
+.user-avatar {
+  width: 100%;
+  height: 50px;
+  border-bottom: solid 1px #6d6c6c;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.user-avatar:hover {
+  color: #f44336;
+  border-bottom: solid 1px #f44336;
+}
+
+.avatar {
+  object-fit: contain;
+  width: 60%;
+  height: 60%;
+  border-radius: 50%;
+}
+
+.spinner {
+  color: #f44336;
+}
+
+.add-user {
+  transition: color .4s;
+  width: 100%;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  cursor: pointer;
+}
+
+.add-user:hover {
+  color: #f44336;
+}
+
+.selected {
+  color: #f44336;
+  border-bottom: solid 1px #f44336;
+}
+
+.dialog_user {
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.dialog_avatar {
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.no_user {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

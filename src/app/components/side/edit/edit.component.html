@@ -1,0 +1,37 @@
+<ng-container *ngIf="!loadingUser; else noUser">
+  <mat-card>
+    <div class="user_info">
+      <div class="user_avatar">
+        <img [src]="user.avatar | img | async" alt="avatar" class="avatar">
+      </div>
+      <div class="user_data">
+
+        <p>
+          <b><div>Username:</div> </b>
+          {{ user.username }}
+        </p>
+
+        <p>
+          <b>
+            <div>Email:</div>
+          </b>
+          {{ user.email }}
+        </p>
+
+        <p
+          matTooltip="Sherable id"
+          matTooltipPosition="right"
+        >
+          <b><div>Id:</div> </b>
+          <i class="id">{{ user.id }}</i>
+        </p>
+
+      </div>
+    </div>
+  </mat-card>
+</ng-container>
+<ng-template #noUser>
+  <div class="spinner">
+      <mat-spinner diameter="100"></mat-spinner>
+  </div>
+</ng-template>

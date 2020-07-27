@@ -10,13 +10,22 @@
 }
 
 .bts {
+  height: 100%;
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-end;
 }
-
 
 .email-err {
   color: #f44336;
   font-size: 75%;
+}
+
+.image-up {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-control-up {
+  margin: 1rem 0;
 }
