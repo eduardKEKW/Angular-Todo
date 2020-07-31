@@ -13,7 +13,7 @@ export class DocPipe implements PipeTransform {
   ) {}
 
 
-  transform(value: unknown, ...args: unknown[]): Observable<User> {
+  transform(value: string, ...args: unknown[]): Observable<User> {
     return this.userService.getUser(value);
   }
 

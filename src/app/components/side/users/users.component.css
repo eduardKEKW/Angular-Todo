@@ -45,6 +45,10 @@
 }
 
 .side-open .expend-btn > .mat-icon {
+  transform: rotateY(360deg);
+}
+
+.expend-btn > .mat-icon {
   transform: rotateY(180deg);
 }
 
@@ -129,4 +133,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.rev {
+  transform: translateY(-180deg);
 }

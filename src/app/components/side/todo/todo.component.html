@@ -1,0 +1,98 @@
+<mat-expansion-panel class="todo" [expanded]="expanded" (opened)="expanded = true" (closed)="expanded = undefined" [disabled]="isClient">
+
+  <mat-expansion-panel-header collapsedHeight='100px'>
+    <div class="todo_header">
+      <div class="details">
+        <div class="todo_text">
+          {{ todo.text }}
+        </div>
+
+        <div class="todo_expire">
+         <b>Expires in:</b> {{ todo.expire | fireDate:'moment' }}
+        </div>
+      </div>
+
+      <div class="sub_details">
+        <div class="todo_created">
+          Created at: {{ todo.createdAt | fireDate }}
+        </div>
+
+        <div class="todo_from" *ngIf = "todo.from | doc | async as user" >
+          From: {{user.username}}
+        </div>
+      </div>
+    </div>
+  </mat-expansion-panel-header>
+
+  <div class="edit_todo">
+    <div class="title">Edit Todo</div>
+
+    <form [formGroup]="editTodoForm" (submit)="onSubmit()">
+
+        <div class="form_content">
+          <mat-form-field class="m-r">
+            <mat-label>Text</mat-label>
+            <textarea matInput formControlName="text" placeholder="todo"></textarea>
+            <mat-error *ngIf="hasError('text', 'maxLength')">
+              Max 150 chars.
+            </mat-error>
+            <mat-error *ngIf="hasError('text', 'required')">
+              Text is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <div class="side">
+            <mat-form-field>
+              <mat-label>Choose a date</mat-label>
+              <input matInput [matDatepicker]="picker" formControlName="expire">
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+              <mat-error *ngIf="hasError('expire', 'required')">
+                Date is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field *ngIf="admin">
+              <mat-label>Assigne todo</mat-label>
+              <input type="text" matInput formControlName="from" [matAutocomplete]="auto" placeholder="User">
+              <mat-autocomplete #auto="matAutocomplete">
+                <mat-option
+                  *ngFor="let user of admin.admin | docs | async"
+                  [value]="user.username"
+                  (click)="selectSendTo(user.id)"
+                  [ngClass]="{ 'disable': user.id === userId }"
+                >
+                  <div class="option">
+                    <div class="option_img">
+                      <img [src]="user.avatar | img | async" alt="avatar" class="avatar">
+                    </div>
+                    <div>
+                      {{ user.username }}
+                    </div>
+                  </div>
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+
+          </div>
+
+          <div
+            matTooltip="Delete todo"
+            matTooltipPosition="right"
+            class="del"
+            (click)="deleteTodo()"
+          >
+            <mat-icon>delete</mat-icon>
+          </div>
+
+        </div>
+
+      <div class="bts">
+        <button class="submit" mat-button type="submit" [disabled]="!loading && !editTodoForm.valid">Save</button>
+        <button mat-raised-button color="warn" (click)="onCancel()">Cancel</button>
+      </div>
+
+    </form>
+  </div>
+
+</mat-expansion-panel>

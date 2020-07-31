@@ -7,39 +7,47 @@ import { Todo } from './../../../core/interfaces/todo';
 @Component({
   selector: 'app-edit',
   templateUrl: './edit.component.html',
-  styleUrls: ['./edit.component.css']
+  styleUrls: ['./edit.component.css'],
 })
 export class EditComponent implements OnInit {
-
   user: User | null;
   todos: [Todo] | [] = [];
   client = false;
   loadingUser = true;
   loadingTodos = true;
+  admin: User | null = null;
 
   constructor(
     private userService: UserService,
-    private todosService: TodosService,
-  ) { }
+    private todosService: TodosService
+  ) {}
 
   ngOnInit(): void {
-    this.todosService.loadingTodos$.subscribe(loading => this.loadingTodos = loading);
-    this.todosService.loadingUser$.subscribe(loading => this.loadingUser = loading);
+    this.todosService.loadingTodos$.subscribe(
+      (loading) => (this.loadingTodos = loading)
+    );
+    this.todosService.loadingUser$.subscribe(
+      (loading) => (this.loadingUser = loading)
+    );
 
-    this
-      .todosService
-      .getUser()
-      .subscribe((user) => {
-        this.user = user;
+    this.todosService.getUser().subscribe((user) => {
+      this.user = user;
 
-        this.userService.user$.subscribe((admin: User) => this.client = admin.id === this.user.id);
-      });
+      this.userService.user$.subscribe(
+        (admin: User) => {
+          this.admin = admin;
+          this.client = admin.id === this.user.id;
+        }
+      );
 
-    this.todosService
-      .getTodos()
-      .subscribe((todos: [Todo]) => {
-        this.todos = todos;
-      });
+    });
+
+    this.todosService.getTodos().subscribe((todos: [Todo]) => {
+      this.todos = todos;
+    });
   }
 
+  addNewTodo(): void {
+    this.todosService.createTodo(this.user.id, this.admin.id);
+  }
 }

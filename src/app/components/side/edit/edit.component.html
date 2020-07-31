@@ -1,5 +1,5 @@
 <ng-container *ngIf="!loadingUser; else noUser">
-  <mat-card>
+  <mat-card class="">
     <div class="user_info">
       <div class="user_avatar">
         <img [src]="user.avatar | img | async" alt="avatar" class="avatar">
@@ -26,6 +26,10 @@
           <i class="id">{{ user.id }}</i>
         </p>
 
+        <div class="is_admin" *ngIf="client">
+          Admin
+        </div>
+
       </div>
     </div>
   </mat-card>
@@ -33,5 +37,38 @@
 <ng-template #noUser>
   <div class="spinner">
       <mat-spinner diameter="100"></mat-spinner>
+  </div>
+</ng-template>
+
+<ng-container *ngIf="!loadingTodos; else noTodos">
+
+      <div class="todos">
+
+        <app-todo *ngFor="let todo of todos; let first = first" [todo]="todo" [active]="first" [userId]="user.id"
+          [isClient]="client">
+        </app-todo>
+
+
+        <div class="no_todos" *ngIf="client && !todos.length">
+          <p>There are no todos assigned. Share your id to get todos assigned to you.</p>
+        </div>
+
+        <div class="add_todo" *ngIf="!client">
+          <mat-icon class="add_todo_btn" matTooltip="Add new todo" matTooltipPosition="right" (click)="addNewTodo()">
+            add_circle_outline
+          </mat-icon>
+        </div>
+
+      </div>
+
+      <div class="intro" *ngIf="client">
+        <p>Share your id to get todos assigne to you.</p>
+      </div>
+
+</ng-container>
+
+<ng-template #noTodos>
+  <div class="spinner">
+    <mat-spinner diameter="100"></mat-spinner>
   </div>
 </ng-template>

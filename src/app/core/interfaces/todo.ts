@@ -1,8 +1,8 @@
 export interface Todo {
   text: string;
-  from: string;
+  from?: string;
   expire: Date;
-  createdAt: Date;
+  createdAt?: Date;
   userId: string;
   id?: string;
 }

@@ -44,7 +44,12 @@ export class UserService {
     map((user) => {
       return user;
     }),
-    tap(user => this.user = user)
+    tap((user: User) => {
+      if (!this.user) {
+        this.dialogMessage.next(`Logged In ${user.username}`);
+      }
+      this.user = user;
+    })
   );
 
   login(email: string, password: string): Observable<any> {
@@ -54,7 +59,9 @@ export class UserService {
       .pipe(
         tap({
           error: () => this.loading.next(false),
-          complete: () => this.loading.next(false)
+          complete: () => {
+            this.loading.next(false);
+          }
         })
       );
   }
@@ -71,7 +78,9 @@ export class UserService {
 
         return this.saveUser(userCredentials, userData);
       })
-      .finally(() => this.loading.next(false) );
+      .finally(() => {
+        this.loading.next(false);
+      });
   }
 
   saveUser(userCredentials, userData): Promise<any> {
@@ -108,8 +117,14 @@ export class UserService {
     );
   }
 
-  getUser(ref): Observable<any> {
-    return this.DB.doc(ref).valueChanges();
+  getUser(id: string): Observable<any> {
+    const path = `users/${id}`;
+
+    return this.DB.doc(path).valueChanges().pipe(
+      map((val) => {
+        return val;
+      })
+    );
   }
 
   getImg(id: string): Observable<string> {

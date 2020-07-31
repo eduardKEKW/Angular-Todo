@@ -12,14 +12,31 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatListModule } from '@angular/material/list';
-
+import { MatExpansionModule } from '@angular/material/expansion';
+import { TodoComponent } from './todo/todo.component';
+import { DatePipe } from './pipes/date.pipe';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { FilterModalPipe } from './pipes/filter-modal.pipe';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 @NgModule({
-  declarations: [UsersComponent, EditComponent, DocPipe, DocsPipe, ImgPipe, DialogAddComponent],
+  declarations: [
+    DatePipe,
+    UsersComponent,
+    EditComponent,
+    DocPipe,
+    DocsPipe,
+    ImgPipe,
+    DialogAddComponent,
+    TodoComponent,
+    FilterModalPipe,
+  ],
   imports: [
     CommonModule,
     MatIconModule,
@@ -31,10 +48,14 @@ import { MatListModule } from '@angular/material/list';
     FormsModule,
     MatCardModule,
     MatDividerModule,
-    MatListModule
+    MatListModule,
+    MatExpansionModule,
+    ReactiveFormsModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatGridListModule,
+    MatAutocompleteModule,
   ],
-  exports: [
-    UsersComponent
-  ]
+  exports: [UsersComponent],
 })
-export class SideModule { }
+export class SideModule {}

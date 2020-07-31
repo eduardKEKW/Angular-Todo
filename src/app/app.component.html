@@ -1,8 +1,7 @@
 <mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
+
 <app-users *ngIf="user"></app-users>
 
-<div (click)="register()">register</div>
-<div (click)="logOut()">logou</div>
-
 <app-bottom-sheet></app-bottom-sheet>
+
 <router-outlet></router-outlet>
