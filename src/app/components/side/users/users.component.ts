@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, ComponentFactoryResolver, ComponentFactory } from '@angular/core';
 import { UserService } from './../../../core/services/user.service';
 import { User } from './../../../core/interfaces/user';
 import { Observable, BehaviorSubject } from 'rxjs';
@@ -21,7 +21,7 @@ export class UsersComponent implements OnInit {
   constructor(
     private userService: UserService,
     private todosService: TodosService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
   ) { }
 
   ngOnInit(): void {
@@ -59,7 +59,6 @@ export class UsersComponent implements OnInit {
       }
     });
   }
-
 }
 
 

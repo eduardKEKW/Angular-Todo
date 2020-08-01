@@ -1,6 +1,9 @@
-<mat-expansion-panel class="todo" [expanded]="expanded" (opened)="expanded = true" (closed)="expanded = undefined" [disabled]="isClient">
+<mat-expansion-panel class="todo" [expanded]="expanded" (opened)="expanded = true" (closed)="expanded = undefined" *ngIf="show">
 
   <mat-expansion-panel-header collapsedHeight='100px'>
+    <div class="completed" *ngIf="todo.completed">
+      <mat-icon>done</mat-icon>
+    </div>
     <div class="todo_header">
       <div class="details">
         <div class="todo_text">
@@ -24,7 +27,7 @@
     </div>
   </mat-expansion-panel-header>
 
-  <div class="edit_todo">
+  <div class="edit_todo" *ngIf="!isClient">
     <div class="title">Edit Todo</div>
 
     <form [formGroup]="editTodoForm" (submit)="onSubmit()">
@@ -93,6 +96,13 @@
       </div>
 
     </form>
+  </div>
+
+  <div class="complete_form" *ngIf="isClient">
+    <mat-checkbox class="complete_form" [checked]="todo.completed"
+      (change)="checkCompleted($event.checked, todo.id)">
+      Completed
+    </mat-checkbox>
   </div>
 
 </mat-expansion-panel>

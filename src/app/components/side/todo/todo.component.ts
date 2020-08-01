@@ -1,21 +1,23 @@
-import { Component, OnInit, Input, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectorRef, OnChanges } from '@angular/core';
 import { Todo } from './../../../core/interfaces/todo';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { TodosService } from './../../../core/services/todos.service';
 import { User } from 'src/app/core/interfaces/user';
 import { UserService } from 'src/app/core/services/user.service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-todo',
   templateUrl: './todo.component.html',
   styleUrls: ['./todo.component.css'],
 })
-export class TodoComponent implements OnInit {
+export class TodoComponent implements OnInit, OnChanges {
   editTodoForm: FormGroup;
   expanded: undefined | boolean = undefined;
   loading = false;
   admin: User | null = null;
   from: string | null = null;
+  show = true;
 
   constructor(
     private todosService: TodosService,
@@ -26,6 +28,7 @@ export class TodoComponent implements OnInit {
   @Input() active: boolean;
   @Input() userId: string;
   @Input() isClient: boolean;
+  @Input() filter: string;
 
   ngOnInit(): void {
     this.editTodoForm = new FormGroup({
@@ -44,6 +47,11 @@ export class TodoComponent implements OnInit {
     });
 
     this.expanded = this.todo.text ? undefined : true;
+    this.show = this.showTodo(this.filter);
+  }
+
+  ngOnChanges(changes): void {
+    this.show = this.showTodo(this.filter);
   }
 
   hasError(controlName: string, errorName: string): boolean {
@@ -90,6 +98,28 @@ export class TodoComponent implements OnInit {
   }
 
   deleteTodo(): void {
-    this.todosService.deleteTodo(this.todo.id);
+    this.todosService.deleteTodo(this.todo.id)
+    .subscribe(
+      (res) => this.userService.dialogMessage.next(`Todo ${this.todo.id} is deleted`),
+      (err) => this.userService.dialogMessage.next(`Todo ${this.todo.id} failed to delete`),
+    );
   }
+
+  checkCompleted(completed: boolean, id: string): void {
+    this.todosService.checkTodo(completed, id)
+    .subscribe(
+      (res) => this.userService.dialogMessage.next(`Todo ${id} is ${completed ? '' : 'not'} completed`),
+      (err) => this.userService.dialogMessage.next(`Todo ${id} failed`),
+    );
+  }
+
+  showTodo(type: string): boolean {
+    return {
+      '-1': moment(new Date((this.todo.expire as any).toDate())).isBefore(new Date(Date.now())),
+      0 : true,
+      1 : this.todo.completed
+    }[type];
+  }
+
+
 }

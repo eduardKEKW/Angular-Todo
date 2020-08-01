@@ -28,7 +28,7 @@ export class UserService {
   private eventAuthError = new BehaviorSubject<string>('');
   public eventAuthError$ = this.eventAuthError.asObservable();
 
-  private dialogMessage = new Subject<string>();
+  public dialogMessage = new Subject<string>();
   public dialogMessage$ = this.dialogMessage.asObservable();
 
   user$: Observable<User | null> = this.authFire.authState.pipe(

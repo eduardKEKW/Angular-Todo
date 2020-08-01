@@ -3,6 +3,7 @@ import { UserService } from 'src/app/core/services/user.service';
 import { TodosService } from './../../../core/services/todos.service';
 import { User } from 'src/app/core/interfaces/user';
 import { Todo } from './../../../core/interfaces/todo';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-edit',
@@ -16,6 +17,7 @@ export class EditComponent implements OnInit {
   loadingUser = true;
   loadingTodos = true;
   admin: User | null = null;
+  filter: '0' | '1' | '-1' = '0';
 
   constructor(
     private userService: UserService,
@@ -48,6 +50,12 @@ export class EditComponent implements OnInit {
   }
 
   addNewTodo(): void {
+    this.filter = '0';
     this.todosService.createTodo(this.user.id, this.admin.id);
   }
+
+  filterChange({ value }): void {
+    this.filter = value;
+  }
+
 }

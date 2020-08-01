@@ -10,8 +10,6 @@ import { environment } from '../environments/environment';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 
 import { AuthModule } from './components/auth/auth.module';
-import { SideModule } from './components/side/side.module';
-
 import { AngularFireStorageModule } from '@angular/fire/storage';
 
 import { MatProgressBarModule } from '@angular/material/progress-bar';
@@ -21,14 +19,13 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 @NgModule({
   declarations: [AppComponent],
   imports: [
-  BrowserModule,
+    BrowserModule,
     AppRoutingModule,
     AngularFireStorageModule,
     BrowserAnimationsModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
     AuthModule,
-    SideModule,
     MatProgressBarModule,
     AngularFireDatabaseModule,
     MatSnackBarModule

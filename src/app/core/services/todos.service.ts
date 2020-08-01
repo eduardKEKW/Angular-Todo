@@ -87,18 +87,24 @@ export class TodosService {
   }
 
   createTodo(userId, fromId): void {
-    console.log(userId, fromId);
     this.DB.doc(`todos/${this.DB.createId()}`).set({
       from: fromId,
       text: '',
       createdAt: new Date(),
       expire: new Date(),
       userId,
+      completed: false,
     });
   }
 
-  deleteTodo(id: string): void {
-    this.DB.doc(`todos/${id}`).delete();
+  deleteTodo(id: string): Observable<void> {
+    return from(this.DB.doc(`todos/${id}`).delete());
+  }
+
+  checkTodo(value: boolean, todoId: string): Observable<void> {
+    return from(this.DB.doc(`todos/${todoId}`).update({
+      completed: value
+    }));
   }
 
 }

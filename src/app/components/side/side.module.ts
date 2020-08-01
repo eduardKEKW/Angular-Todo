@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, ComponentFactory, ComponentFactoryResolver } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UsersComponent, DialogAddComponent } from './users/users.component';
 
@@ -24,6 +24,8 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { FilterModalPipe } from './pipes/filter-modal.pipe';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatRadioModule } from '@angular/material/radio';
 
 @NgModule({
   declarations: [
@@ -55,7 +57,17 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     MatNativeDateModule,
     MatGridListModule,
     MatAutocompleteModule,
+    MatCheckboxModule,
+    MatRadioModule
   ],
-  exports: [UsersComponent],
+  exports: [],
 })
-export class SideModule {}
+export class SideModule {
+
+  constructor(private componentFactoryResolver: ComponentFactoryResolver) { }
+
+  public resolveComponent(): ComponentFactory<UsersComponent> {
+    return this.componentFactoryResolver.resolveComponentFactory(UsersComponent);
+  }
+
+}

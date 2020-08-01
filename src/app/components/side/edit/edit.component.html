@@ -42,10 +42,22 @@
 
 <ng-container *ngIf="!loadingTodos; else noTodos">
 
-      <div class="todos">
+      <div class="filters"*ngIf="!client">
+        <mat-radio-group [(ngModel)]="filter" (change)="filterChange($event)">
+          <mat-radio-button class="m-r-2" value="1">Completed</mat-radio-button>
+          <mat-radio-button class="m-r-2" value="-1">Expired</mat-radio-button>
+          <mat-radio-button class="m-r-2" value="0">All</mat-radio-button>
+        </mat-radio-group>
+      </div>
 
-        <app-todo *ngFor="let todo of todos; let first = first" [todo]="todo" [active]="first" [userId]="user.id"
-          [isClient]="client">
+      <div class="todos">
+        <app-todo
+          *ngFor="let todo of todos; let first = first"
+          [todo]="todo"
+          [active]="first"
+          [userId]="user.id"
+          [isClient]="client"
+          [filter]="filter" >
         </app-todo>
 
 
