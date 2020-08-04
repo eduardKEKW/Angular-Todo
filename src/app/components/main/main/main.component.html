@@ -1,0 +1,10 @@
+<div class="main" *ngIf="!loading">
+  <app-user
+    *ngFor="let user of users"
+    [user]="user" >
+  </app-user>
+</div>
+
+<div class="loading" *ngIf="loading">
+  <mat-spinner diameter="100"></mat-spinner>
+</div>

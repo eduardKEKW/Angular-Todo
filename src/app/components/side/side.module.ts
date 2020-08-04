@@ -5,9 +5,6 @@ import { UsersComponent, DialogAddComponent } from './users/users.component';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { EditComponent } from './edit/edit.component';
-import { DocPipe } from './pipes/doc.pipe';
-import { DocsPipe } from './pipes/docs.pipe';
-import { ImgPipe } from './pipes/img.pipe';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
@@ -18,26 +15,21 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatListModule } from '@angular/material/list';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { TodoComponent } from './todo/todo.component';
-import { DatePipe } from './pipes/date.pipe';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatGridListModule } from '@angular/material/grid-list';
-import { FilterModalPipe } from './pipes/filter-modal.pipe';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatRadioModule } from '@angular/material/radio';
 
+import { PipesModule } from './../../core/pipes/pipes.module';
+
 @NgModule({
   declarations: [
-    DatePipe,
     UsersComponent,
     EditComponent,
-    DocPipe,
-    DocsPipe,
-    ImgPipe,
     DialogAddComponent,
     TodoComponent,
-    FilterModalPipe,
   ],
   imports: [
     CommonModule,
@@ -58,7 +50,8 @@ import { MatRadioModule } from '@angular/material/radio';
     MatGridListModule,
     MatAutocompleteModule,
     MatCheckboxModule,
-    MatRadioModule
+    MatRadioModule,
+    PipesModule
   ],
   exports: [],
 })

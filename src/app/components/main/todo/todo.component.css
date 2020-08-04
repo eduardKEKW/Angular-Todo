@@ -1,5 +1,6 @@
 .todo {
-  margin-top: 2rem;
+  margin-top: 1rem;
+  border-left: solid 2.5px #e02416;
 }
 
 .details {
@@ -38,7 +39,8 @@
 }
 
 .edit_todo {
-  margin-top: 50px;
+  margin-top: 20px;
+  word-wrap: break-word;
 }
 
 .c-grid {

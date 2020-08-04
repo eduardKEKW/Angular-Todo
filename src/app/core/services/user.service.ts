@@ -45,7 +45,7 @@ export class UserService {
       return user;
     }),
     tap((user: User) => {
-      if (!this.user) {
+      if (!this.user && user) {
         this.dialogMessage.next(`Logged In ${user.username}`);
       }
       this.user = user;
@@ -119,7 +119,7 @@ export class UserService {
 
   getUser(id: string): Observable<any> {
     const path = `users/${id}`;
-
+    console.log(path);
     return this.DB.doc(path).valueChanges().pipe(
       map((val) => {
         return val;

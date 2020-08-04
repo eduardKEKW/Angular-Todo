@@ -25,9 +25,14 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     this.userService.user$.subscribe((user) => {
       console.log(user);
+
       this.user = user;
 
-      this.loadFeature();
+      if (user) {
+        this.loadFeature();
+      } else {
+        this.container.clear();
+      }
     });
 
     this.userService.loading$.subscribe((isLoading) => {
@@ -62,10 +67,9 @@ export class AppComponent implements OnInit {
       this.compiler.compileModuleAsync(SideModule).then(moduleFactory => {
 
         const moduleRef = moduleFactory.create(this.injector);
-        console.log(moduleRef.instance);
-
         const componentFactory = moduleRef.instance.resolveComponent();
         const { instance } = this.container.createComponent(componentFactory);
+
       });
     });
   }

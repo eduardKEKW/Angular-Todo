@@ -1,0 +1,15 @@
+.main {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  padding: 40px;
+  grid-template-columns: 1fr 1fr;
+}
+
+.loading {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

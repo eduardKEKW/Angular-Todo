@@ -6,6 +6,7 @@
   width: 40vw;
   background-color: white;
   padding: 2rem;
+  z-index: 100;
 }
 
 .side-open {

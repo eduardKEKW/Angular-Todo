@@ -1,0 +1,39 @@
+<mat-expansion-panel class="todo">
+  <mat-expansion-panel-header collapsedHeight='100px'>
+
+    <div class="completed" *ngIf="todo.completed">
+      <mat-icon>done</mat-icon>
+    </div>
+    <div class="completed" *ngIf="showTodo('-1')">
+      <mat-icon>schedule</mat-icon>
+    </div>
+
+    <div class="todo_header">
+      <div class="details">
+        <div class="todo_text">
+          {{ todo.text }}
+        </div>
+
+        <div class="todo_expire">
+          <b>Expires in:</b> {{ todo.expire | fireDate:'moment' }}
+        </div>
+      </div>
+
+      <div class="sub_details">
+        <div class="todo_created">
+          Created at: {{ todo.createdAt | fireDate }}
+        </div>
+
+        <div class="todo_from" *ngIf="todo.from | doc | async as user">
+          From: {{user.username}}
+        </div>
+      </div>
+    </div>
+
+  </mat-expansion-panel-header>
+
+  <div class="edit_todo">
+    <div class="">{{ todo.text }}</div>
+  </div>
+
+</mat-expansion-panel>

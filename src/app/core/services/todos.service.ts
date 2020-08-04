@@ -4,6 +4,9 @@ import { switchMap, map, tap, finalize } from 'rxjs/operators';
 import { User } from './../interfaces/user';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Todo } from './../interfaces/todo';
+import * as moment from 'moment';
+import * as firebase from 'firebase';
+import { DocPipe } from './../pipes/globalPipes/doc.pipe';
 
 @Injectable({
   providedIn: 'root',
@@ -42,7 +45,7 @@ export class TodosService {
     );
   }
 
-  getTodos(): any {
+  getTodos(): Observable<Todo[]> {
     return this.getUser().pipe(
       tap((_) => this.loadingTodos.next(true)),
       switchMap((user: User) => {
@@ -61,11 +64,52 @@ export class TodosService {
             })
           );
       }),
-      map((todos: [Todo]) => {
+      map((todos: Todo[]) => {
         return todos;
       }),
       tap(() => this.loadingTodos.next(false))
     );
+  }
+
+  getTodosForUser(id: string, filters): [Observable<Todo[]>, BehaviorSubject<{}>] {
+    const obs = new BehaviorSubject(filters);
+    const obs$ = obs.asObservable();
+
+    const query$ = obs$.pipe(
+      switchMap((filtersObj) => {
+
+        return this.DB.collection('todos', (ref) => {
+          let base = ref.where('userId', '==', id);
+
+          if (filtersObj.completed) {
+            base = base.where('completed', '==', true);
+          }
+
+          if (filtersObj.expired) {
+            base = base.where('expire', '<=', firebase.firestore.Timestamp.fromDate(new Date()));
+          }
+
+          // base = base.orderBy('expire');
+          // base = base.limit(filtersObj.pageSize);
+          // base = base.startAfter();
+
+          return base;
+        })
+          .snapshotChanges()
+          .pipe(
+            map((actions) => {
+              return actions.map((item) => {
+                return {
+                  id: item.payload.doc.id,
+                  ...(item.payload.doc.data() as Todo),
+                } as Todo;
+              });
+            })
+          );
+      })
+    );
+
+    return [query$, obs];
   }
 
   editTodo(

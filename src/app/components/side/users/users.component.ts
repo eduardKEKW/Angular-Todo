@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject, ComponentFactoryResolver, ComponentFactory } from '@angular/core';
 import { UserService } from './../../../core/services/user.service';
 import { User } from './../../../core/interfaces/user';
-import { Observable, BehaviorSubject } from 'rxjs';
+import { Observable, BehaviorSubject, Subject } from 'rxjs';
 import { TodosService } from './../../../core/services/todos.service';
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from '@angular/material/dialog';
 import { debounceTime, distinctUntilChanged, filter, switchMap, map, tap } from 'rxjs/operators';
@@ -73,16 +73,21 @@ export class DialogAddComponent implements OnInit {
     public dialogRef: MatDialogRef<DialogAddComponent>,
     @Inject(MAT_DIALOG_DATA) public data,
     private DB: AngularFirestore,
+    private userService: UserService
   ) { }
 
   id: string;
   loading = false;
   disable = true;
   user: User | null = null;
-  searchTerm$: BehaviorSubject<User> = new BehaviorSubject<User>(null);
+  searchTerm: Subject<string> = new Subject<string>();
+  searchTerm$ = this.searchTerm.asObservable();
+  clientId: string;
 
   ngOnInit(): void {
     this.id = this.data.id;
+
+    this.userService.user$.subscribe((user: User) => this.clientId = user.id);
 
     this.searchTerm$.pipe(
       debounceTime(200),
@@ -116,7 +121,10 @@ export class DialogAddComponent implements OnInit {
 
   dataChanged(event): void {
     this.id = event.target.value;
-    this.searchTerm$.next(event.target.value);
+
+    if (this.id !== this.clientId) {
+      this.searchTerm.next(this.id);
+    }
   }
 
 }

@@ -16,6 +16,8 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 
+import { MainModule } from './components/main/main.module';
+
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -28,7 +30,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     AuthModule,
     MatProgressBarModule,
     AngularFireDatabaseModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MainModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

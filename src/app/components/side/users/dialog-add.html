@@ -3,7 +3,7 @@
   <p>Add user to your watch list.</p>
   <mat-form-field>
     <mat-label>User Id</mat-label>
-    <input matInput (change)="dataChanged($event)">
+    <input matInput (change)="dataChanged($event)" (paste)="dataChanged($event)">
   </mat-form-field>
 </div>
 

@@ -4,6 +4,9 @@
     <div class="completed" *ngIf="todo.completed">
       <mat-icon>done</mat-icon>
     </div>
+    <div class="completed" *ngIf="showTodo('-1')">
+      <mat-icon>schedule</mat-icon>
+    </div>
     <div class="todo_header">
       <div class="details">
         <div class="todo_text">

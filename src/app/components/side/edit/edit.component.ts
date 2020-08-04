@@ -3,7 +3,6 @@ import { UserService } from 'src/app/core/services/user.service';
 import { TodosService } from './../../../core/services/todos.service';
 import { User } from 'src/app/core/interfaces/user';
 import { Todo } from './../../../core/interfaces/todo';
-import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-edit',
