@@ -43,7 +43,7 @@ export class RegisterComponent implements OnInit {
       ]),
       avatar: new FormControl('', [
         RxwebValidators.image({ maxHeight: 1000, maxWidth: 1000 }),
-        RxwebValidators.extension({ extensions: ['jpeg', 'gif', 'png'] })
+        RxwebValidators.extension({ extensions: ['jpeg', 'gif', 'png', 'jpg'] })
       ]),
     });
   }

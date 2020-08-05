@@ -24,13 +24,13 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.userService.user$.subscribe((user) => {
-      console.log(user);
-
       this.user = user;
 
-      if (user) {
-        this.loadFeature();
-      } else {
+      if (!this.container.length && user) {
+        this.loadSideBar();
+      }
+
+      if (!user) {
         this.container.clear();
       }
     });
@@ -49,20 +49,11 @@ export class AppComponent implements OnInit {
 
   }
 
-  register(): void {
-    console.log('registering')
-    this.userService.register({
-      email: 'test3@test.com',
-      password: 'testing',
-      name: 'test',
-    });
-  }
-
   logOut(): void {
     this.userService.logout();
   }
 
-  loadFeature(): void {
+  loadSideBar(): void {
     import('./components/side/side.module').then(({ SideModule }) => {
       this.compiler.compileModuleAsync(SideModule).then(moduleFactory => {
 

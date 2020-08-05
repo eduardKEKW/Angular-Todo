@@ -60,7 +60,6 @@ export class UserComponent implements OnInit {
   }
 
   changePage(options): void {
-    console.log(options);
     this.paginationOptions = { ...this.paginationOptions, ...options };
     this.getPage();
   }
@@ -76,7 +75,6 @@ export class UserComponent implements OnInit {
       (this.paginationOptions.pageIndex + 1) * this.paginationOptions.pageSize
     );
 
-    console.log(this.todos, this.showTodos, this.paginationOptions);
   }
 
 }

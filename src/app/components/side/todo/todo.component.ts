@@ -87,6 +87,10 @@ export class TodoComponent implements OnInit, OnChanges {
     this.from = id;
   }
 
+  selectSendToSingle(id: string): void {
+    this.todosService.editTodoFrom(id, this.todo.id, this.userId);
+  }
+
   onCancel(): void {
     this.editTodoForm.controls.text.reset(this.todo.text);
     this.editTodoForm.controls.text.setErrors(null);

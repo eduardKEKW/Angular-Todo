@@ -30,6 +30,10 @@
           Admin
         </div>
 
+        <div class="delete" *ngIf="!client">
+            <button mat-button (click)="deleteUser()" >Delete</button>
+        </div>
+
       </div>
     </div>
   </mat-card>

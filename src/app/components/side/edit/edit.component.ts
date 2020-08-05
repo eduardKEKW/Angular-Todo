@@ -36,8 +36,10 @@ export class EditComponent implements OnInit {
 
       this.userService.user$.subscribe(
         (admin: User) => {
-          this.admin = admin;
-          this.client = admin.id === this.user.id;
+          if (admin) {
+            this.admin = admin;
+            this.client = admin.id === this.user.id;
+          }
         }
       );
 
@@ -55,6 +57,10 @@ export class EditComponent implements OnInit {
 
   filterChange({ value }): void {
     this.filter = value;
+  }
+
+  deleteUser(): void {
+    this.userService.deleteWatch(this.admin.id, this.user.id);
   }
 
 }

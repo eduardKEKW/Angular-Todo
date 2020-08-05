@@ -15,8 +15,9 @@
         </div>
 
         <div class="todo_expire">
-          <b>Expires in:</b> {{ todo.expire | fireDate:'moment' }}
+          <b>{{ showTodo('-1') ? 'Time expired' : 'Expires'}}</b> {{ todo.expire | fireDate:'moment' }}
         </div>
+
       </div>
 
       <div class="sub_details">

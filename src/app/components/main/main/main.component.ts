@@ -14,7 +14,7 @@ export class MainComponent implements OnInit {
   ) { }
 
   users: User[] | null = null;
-  loading = false;
+  loading = true;
   error = false;
 
   ngOnInit(): void {
@@ -24,7 +24,6 @@ export class MainComponent implements OnInit {
       this.users = users;
       this.loading = false;
     }, (err) => {
-      console.log(err);
       this.loading = false;
       this.error = true;
     });

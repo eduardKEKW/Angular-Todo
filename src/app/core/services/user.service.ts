@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { map, switchMap, tap, mergeMap } from 'rxjs/operators';
+import { map, switchMap, tap, mergeMap, filter } from 'rxjs/operators';
 import { of, Observable, BehaviorSubject, from, forkJoin, zip, Subject } from 'rxjs';
 import { AngularFireStorage } from '@angular/fire/storage';
 
@@ -119,7 +119,7 @@ export class UserService {
 
   getUser(id: string): Observable<any> {
     const path = `users/${id}`;
-    console.log(path);
+
     return this.DB.doc(path).valueChanges().pipe(
       map((val) => {
         return val;
@@ -128,28 +128,37 @@ export class UserService {
   }
 
   getImg(id: string): Observable<string> {
-    const ref = this.storage.ref('default.png');
+    console.log(!!id ? `images/${id}` : 'images/default.png');
+    const ref = this.storage.ref(!!id && id !== 'null' ? `images/${id}` : 'images/default.png');
 
     return ref.getDownloadURL();
   }
 
-  getUsers(): Observable<User[]> {
+  getUsers(): Observable<User[] | []> {
     return this.user$.pipe(
       mergeMap((user: User) => {
-          return zip(
-            ...user.admin.map((path: string) => {
-                return this.DB.doc(path)
-                  .snapshotChanges()
-                  .pipe(
-                    map(action => {
-                      return {
-                        id: action.payload.id,
-                        ...action.payload.data() as User
-                      };
-                    })
-                  );
-            })
+        if (!user.admin.length) {
+          user = { admin: [] } as any;
+
+          return from([]);
+        }
+        return zip(
+          ...user.admin.map((path: string) => {
+              return this.DB.doc(path)
+                .snapshotChanges()
+                .pipe(
+                  map(action => {
+                    return {
+                      id: action.payload.id,
+                      ...action.payload.data() as User
+                    };
+                  })
+                );
+          })
         );
+      }),
+      map(res => {
+        return res;
       })
     );
   }
@@ -161,6 +170,17 @@ export class UserService {
     .subscribe({
       error: (err) => this.dialogMessage.next(`${id} failed`),
       next: () => this.dialogMessage.next(`${id} added successfully`)
+    });
+  }
+
+  deleteWatch(userId, wathcId): void {
+    console.log(userId, wathcId);
+    from(this.DB.doc(`users/${userId}`).update({
+      admin: firebase.firestore.FieldValue.arrayRemove(`users/${wathcId}`),
+    }))
+    .subscribe({
+      error: (err) => this.dialogMessage.next(`Deleting user failed`),
+      next: () => this.dialogMessage.next(`User deleted successfully`)
     });
   }
 }

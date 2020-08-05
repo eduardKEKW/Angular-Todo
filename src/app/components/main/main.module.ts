@@ -12,6 +12,8 @@ import { FormsModule } from '@angular/forms';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatInputModule } from '@angular/material/input';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 @NgModule({
   declarations: [MainComponent, UserComponent, TodoComponent],
@@ -25,7 +27,9 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
     FormsModule,
     MatPaginatorModule,
     MatExpansionModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    MatInputModule,
+    MatAutocompleteModule
   ],
   exports: [MainComponent]
 })

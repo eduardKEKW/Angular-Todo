@@ -130,6 +130,18 @@ export class TodosService {
     return from(this.DB.doc(`todos/${todoId}`).update(newData));
   }
 
+  editTodoFrom(
+    sendTo: string,
+    todoId: string,
+    userId: string,
+  ): Observable<any> {
+
+    return from(this.DB.doc(`todos/${todoId}`).update({
+      from: userId,
+      userId: sendTo,
+    }));
+  }
+
   createTodo(userId, fromId): void {
     this.DB.doc(`todos/${this.DB.createId()}`).set({
       from: fromId,

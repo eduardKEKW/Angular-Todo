@@ -106,6 +106,24 @@
       (change)="checkCompleted($event.checked, todo.id)">
       Completed
     </mat-checkbox>
+
+    <mat-form-field *ngIf="admin" class="send">
+      <mat-label>Assigne todo</mat-label>
+      <input type="text" matInput [matAutocomplete]="auto" placeholder="User">
+      <mat-autocomplete #auto="matAutocomplete">
+        <mat-option *ngFor="let user of admin.admin | docs | async" [value]="user.username" (click)="selectSendToSingle(user.id)"
+          [ngClass]="{ 'disable': user.id === userId }">
+          <div class="option">
+            <div class="option_img">
+              <img [src]="user.avatar | img | async" alt="avatar" class="avatar">
+            </div>
+            <div>
+              {{ user.username }}
+            </div>
+          </div>
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
   </div>
 
 </mat-expansion-panel>

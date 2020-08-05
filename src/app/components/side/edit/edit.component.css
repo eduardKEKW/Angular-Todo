@@ -116,3 +116,12 @@
   font-size: .9em;
   margin-right: 20px;
 }
+
+.delete {
+  position: absolute;
+  top: 88%;
+  left: 95%;
+  font-weight: 900;
+  font-size: 1em;
+  transform: translateX(-50%);
+}
